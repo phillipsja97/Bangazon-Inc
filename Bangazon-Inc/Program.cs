@@ -46,7 +46,6 @@ namespace PlanYourHeist
                     tMCourageFactor = Convert.ToDecimal(tMCourage);
                 }
 
-                //heistskillz.Add((name: tMName, skilllevel: tMSkillFactor, couragefactor: tMCourageFactor));
                 myTeam.Add(new TeamMember(tMName, tMSkillFactor, tMCourageFactor));
 
                 Console.WriteLine($"{tMName} has a skill level of {tMSkillFactor} and a courage factor of {tMCourageFactor}, and has been added to your team!");
@@ -60,34 +59,43 @@ namespace PlanYourHeist
 
             foreach (var skill in myTeam)
             {
-                Console.WriteLine($"{skill.Name}: {skill.skillLevel},  {skill.courageFactor}");
+                Console.WriteLine($"{skill.Name}: Skill Level - {skill.skillLevel},  Courage Factor - {skill.courageFactor}");
             }
 
-            Console.ReadLine();
+            Console.WriteLine("How many times would you like to try and rob the bank?");
+            var attempts = Console.ReadLine();
 
             Console.Clear();
 
             var sumSkillLevel = myTeam.Select(level => level.skillLevel).Sum();
-            Console.WriteLine(sumSkillLevel);
+            Console.WriteLine($"The combined skill level of your team is: {sumSkillLevel}.");
 
-            var random = new Random();
-            var luckValue = random.Next(-10, 10);
+            int j = 0;
 
-            banksDifficultyLevel += luckValue;
-
-            Console.WriteLine($"Your teams combined skill level is {sumSkillLevel}. The bank dificulty level is {banksDifficultyLevel}.");
-
-            if (sumSkillLevel >= banksDifficultyLevel)
+            do
             {
-                Console.WriteLine("Success");
+                var random = new Random();
+                var luckValue = random.Next(-10, 10);
+
+                banksDifficultyLevel += luckValue;
+
+                Console.WriteLine($"Your teams combined skill level is {sumSkillLevel}. The bank dificulty level is {banksDifficultyLevel}.");
+
+                if (sumSkillLevel >= banksDifficultyLevel)
+                {
+                    Console.WriteLine("You succeeded in robbing the bank :) ");
+                }
+                else
+                {
+                    Console.WriteLine("You failed in robbing the bank :( ");
+                }
+                j++;
             }
-            else
-            {
-                Console.WriteLine("Failure");
-            }
+            while (j < Int32.Parse(attempts));
 
 
-            
+
+
 
 
 

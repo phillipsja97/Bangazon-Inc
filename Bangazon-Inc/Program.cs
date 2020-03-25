@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Bangazon;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PlanYourHeist
 {
@@ -8,7 +10,9 @@ namespace PlanYourHeist
         static void Main(string[] args)
         {
             // this is something called a "TUPLE" whatever that is
-            List<(string name, int skilllevel, decimal couragefactor)> heistskillz = new List<(string, int, decimal)>();
+            //List<(string name, int skilllevel, decimal couragefactor)> heistskillz = new List<(string, int, decimal)>();
+            List<TeamMember> myTeam = new List<TeamMember>();
+            var banksDifficultyLevel = 100;
 
             Console.WriteLine("Plan Your Heist!");
 
@@ -42,7 +46,8 @@ namespace PlanYourHeist
                     tMCourageFactor = Convert.ToDecimal(tMCourage);
                 }
 
-                heistskillz.Add((name: tMName, skilllevel: tMSkillFactor, couragefactor: tMCourageFactor));
+                //heistskillz.Add((name: tMName, skilllevel: tMSkillFactor, couragefactor: tMCourageFactor));
+                myTeam.Add(new TeamMember(tMName, tMSkillFactor, tMCourageFactor));
 
                 Console.WriteLine($"{tMName} has a skill level of {tMSkillFactor} and a courage factor of {tMCourageFactor}, and has been added to your team!");
                 i++;
@@ -53,11 +58,26 @@ namespace PlanYourHeist
 
             Console.WriteLine($"You have {tMCapacity} team members! ");
 
-            foreach (var skill in heistskillz)
+            foreach (var skill in myTeam)
             {
-                Console.WriteLine($"{skill.name}: {skill.skilllevel},  {skill.couragefactor}");
+                Console.WriteLine($"{skill.Name}: {skill.skillLevel},  {skill.courageFactor}");
 
             }
+
+            Console.Clear();
+
+            var sumSkillLevel = myTeam.Select(level => level.skillLevel).Sum();
+            Console.WriteLine(sumSkillLevel);
+
+            if (sumSkillLevel >= banksDifficultyLevel)
+            {
+                Console.WriteLine("Success");
+            }
+            else
+            {
+                Console.WriteLine("Failure");
+            }
+
 
             Console.ReadLine();
         }
